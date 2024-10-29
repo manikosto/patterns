@@ -1,0 +1,19 @@
+{
+  "capabilities": [
+    {
+      "browserName": "chrome",
+      "maxInstances": 5,
+      "seleniumProtocol": "WebDriver"
+    }
+  ],
+  "configuration": {
+    "hub": "http://hub:4444/grid/register",
+    "nodeTimeout": 120,
+    "port": 5555,
+    "register": true,
+    "registerCycle": 5000,
+    "maxSession": 5,
+    "nodePolling": 2000,
+    "role": "node"
+  }
+}
