@@ -16,7 +16,7 @@ services:
       pip3 install --upgrade pip &&
       pip3 install -r /usr/workspace/requirements.txt ||
       pip3 install -r /usr/workspace/requirements.txt --break-system-packages &&
-      STAGE=$STAGE pytest -sv -o log_cli=true --alluredir=allure-results"
+      STAGE=$$STAGE pytest -sv -o log_cli=true --alluredir=allure-results"
     environment:
       BROWSER: chrome
       STAGE: ${STAGE:-dev}

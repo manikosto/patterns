@@ -23,6 +23,11 @@ def driver(request):
         driver = webdriver.Chrome(options=set_options())
     elif os.environ["BROWSER"] == "firefox":
         driver = webdriver.Firefox(options=set_options())
+    elif os.environ["BROWSER"] == "remote":
+        driver = webdriver.Remote(
+            command_executor='http://selenium-hub:4444/wd/hub',
+            options=webdriver.ChromeOptions()
+        )
     request.cls.driver = driver
     yield driver
     driver.quit()
