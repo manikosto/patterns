@@ -1,15 +1,27 @@
 version: '3'
 
 services:
-  selenium-hub:
-    image: selenium/hub:4.0.0
-    container_name: selenium-hub
-    ports:
-      - "4444:4444"
-
-  chrome-node:
-    build: .
+  chrome:
+    user: root
+    build:
+      context: .
+      dockerfile: Dockerfile-chrome
+      args:
+        BASE_IMAGE: selenium/standalone-chrome:${VERSION}
+    image: chrome:${VERSION}
+    shm_size: 2gb
+    command: >
+      /bin/sh -c "apt-get update &&
+      apt-get install -y python3 python3-pip python3-venv openjdk-11-jre &&
+      pip3 install --upgrade pip &&
+      pip3 install -r /usr/workspace/requirements.txt ||
+      pip3 install -r /usr/workspace/requirements.txt --break-system-packages &&
+      STAGE=$STAGE pytest -sv -o log_cli=true --alluredir=report"
     environment:
-      - HUB_HOST=selenium-hub
-    depends_on:
-      - selenium-hub
+      BROWSER: chrome
+      STAGE: ${STAGE:-dev}
+      VERSION: ${VERSION:-latest}
+    volumes:
+      - ./:/usr/workspace
+    platform: linux/amd64 # Если процессор Apple
+    tty: true

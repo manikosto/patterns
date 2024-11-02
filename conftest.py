@@ -1,26 +1,28 @@
+import os
+
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+# from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 
-@pytest.fixture(scope="function", autouse=True)
-def driver(request):
-    options = Options()
+def set_options():
+    if os.environ["BROWSER"] == "chrome":
+        options = webdriver.ChromeOptions()
+    elif os.environ["BROWSER"] == "firefox":
+        options = webdriver.FirefoxOptions()
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
-    caps = DesiredCapabilities.CHROME.copy()
-    caps['browserVersion'] = '117.0'
+    return options
 
-    driver = webdriver.Remote(
-        command_executor="http://localhost:4444/wd/hub",
-        options=options
-    )
-    # driver = webdriver.Chrome(options=options)
+@pytest.fixture(scope="function", autouse=True)
+def driver(request):
+    if os.environ["BROWSER"] == "chrome":
+        driver = webdriver.Chrome(options=set_options())
+    elif os.environ["BROWSER"] == "firefox":
+        driver = webdriver.Firefox(options=set_options())
     request.cls.driver = driver
     yield driver
     driver.quit()
-
-# qwe
