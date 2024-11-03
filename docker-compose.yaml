@@ -23,6 +23,7 @@ services:
       STAGE: ${STAGE:-dev}
       VERSION: ${VERSION:-latest}
     volumes:
-      - ${PWD}:/usr/workspace
+#      - ${PWD}:/usr/workspace
+      - ${WORKSPACE}:/usr/workspace
     platform: linux/amd64 # Если процессор Apple
     tty: true
