@@ -24,6 +24,6 @@ services:
       VERSION: ${VERSION:-latest}
     volumes:
 #      - ${PWD}:/usr/workspace
-      - ${PROJECT_DIR}:/usr/workspace
+      - ${PROJECT_DIR:-${WORKSPACE}}:/usr/workspace
     platform: linux/amd64 # Если процессор Apple
     tty: true
