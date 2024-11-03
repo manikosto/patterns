@@ -13,10 +13,11 @@ services:
     command: >
       /bin/sh -c "apt-get update &&
       apt-get install -y python3 python3-pip python3-venv openjdk-11-jre &&
-      pip3 install --upgrade pip &&
-      pip3 install -r /usr/workspace/requirements.txt ||
-      pip3 install -r /usr/workspace/requirements.txt --break-system-packages &&
-      STAGE=$$STAGE pytest -sv -o log_cli=true --alluredir=allure-results"
+      python3 -m venv /usr/workspace/venv &&
+      . /usr/workspace/venv/bin/activate &&
+      pip install --upgrade pip &&
+      pip install -r /usr/workspace/requirements.txt &&
+      pytest -sv -o log_cli=true --alluredir=allure-results"
     environment:
       BROWSER: chrome
       STAGE: ${STAGE:-dev}
