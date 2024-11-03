@@ -28,3 +28,6 @@ services:
       - jenkins_workspace:/usr/workspace
     platform: linux/amd64 # Если процессор Apple
     tty: true
+
+volumes:
+  jenkins_workspace:
