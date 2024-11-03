@@ -11,7 +11,7 @@ RUN apt-get update && \
 WORKDIR /usr/workspace
 
 # Копируем requirements.txt для установки зависимостей
-COPY ./ /usr/workspace
+COPY ./requirements.txt /usr/workspace
 
 # Устанавливаем зависимости
 RUN pip3 install --upgrade pip && \
