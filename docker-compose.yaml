@@ -23,7 +23,7 @@ services:
       STAGE: ${STAGE:-dev}
       VERSION: ${VERSION:-latest}
     volumes:
-      - ${PWD}:/usr/workspace
+      - /var/jenkins_home/workspace/AAA:/usr/workspace
 #      - ${WORKSPACE}:/usr/workspace
 #      - jenkins_workspace:/usr/workspace
     platform: linux/amd64 # Если процессор Apple
