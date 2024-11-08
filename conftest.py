@@ -30,4 +30,5 @@ def driver(request):
         )
     request.cls.driver = driver
     yield driver
+    driver.delete_all_cookies()
     driver.quit()
